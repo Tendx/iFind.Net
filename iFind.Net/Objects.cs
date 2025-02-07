@@ -73,7 +73,7 @@ public class Table<C> where C : Const
             yield return value.Deserialize<T>()!;
     }
 
-    public T GetValue<T>(C col, int row)
+    public T? GetValue<T>(C col, int row)
     {
         if ((Data?.TryGetValue(col.Value, out var values)) != true)
             throw new Exception("col not exists");
@@ -81,7 +81,10 @@ public class Table<C> where C : Const
             throw new Exception("col null");
         try
         {
-            return values.ElementAt(row).Deserialize<T>()!;
+            if (values.Length > row)
+                return values.ElementAt(row).Deserialize<T>();
+            else
+                return default;
         }
         catch (Exception)
         {

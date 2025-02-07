@@ -69,6 +69,7 @@ public class ConstituentsOutputPara(string value) : Const(value)
 public class HistoryIndicator(string value) : Const(value)
 {
     public static HistoryIndicator PreClose { get; } = new("preClose");
+    public static HistoryIndicator PreSettle { get; } = new("preSettlement");
     public static HistoryIndicator Open { get; } = new("open");
     public static HistoryIndicator High { get; } = new("high");
     public static HistoryIndicator Low { get; } = new("low");
@@ -89,10 +90,21 @@ public class HistoryIndicator(string value) : Const(value)
     public static HistoryIndicator PB_MRQ { get; } = new("pb_mrq");
 }
 
+public class RealTimeIndicator(string value) : Const(value)
+{
+    public static RealTimeIndicator Open { get; } = new("open");
+    public static RealTimeIndicator Latest { get; } = new("latest");
+    public static RealTimeIndicator Amount { get; } = new("amount");
+    public static RealTimeIndicator LastestPrice { get; } = new("lastest_price");
+    public static RealTimeIndicator Adjust { get; } = new("af_backward");
+}
+
 public class BasicDataIndicator(string value) : Const(value)
 {
     [JsonPropertyName("indicator")]
     public string Indicator { get; } = value;
 
-    public static BasicDataIndicator TrackingIndexThscode = new("ths_tracking_index_thscode_fund");
+    public static BasicDataIndicator TrackingIndexThscode { get; } = new("ths_tracking_index_thscode_fund");
+    public static BasicDataIndicator IndexShortName { get; } = new("ths_index_short_name_index");
+    public static BasicDataIndicator VarietyFuture { get; } = new("ths_td_variety_future");
 }

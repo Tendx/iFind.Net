@@ -73,7 +73,7 @@ public class iFinDRestApi(string? baseUri = null, bool raw = false)
     {
         var body = new Dictionary<string, object>()
         {
-            ["codes"] = codes,
+            ["codes"] = string.Join(",", codes),
             ["indipara"] = indicators,
         };
         return await Request<TablesResult<Table<BasicDataIndicator>[]>>("api/v1/basic_data_service", body, null);
@@ -93,6 +93,16 @@ public class iFinDRestApi(string? baseUri = null, bool raw = false)
             },
         };
         return await Request<TablesResult<Table<HistoryIndicator>[]>>("api/v1/cmd_history_quotation", body, null);
+    }
+
+    public async Task<TablesResult<Table<RealTimeIndicator>[]>> RealTimeQuotation(IEnumerable<string> codes, IEnumerable<RealTimeIndicator> indicators)
+    {
+        var body = new Dictionary<string, object>()
+        {
+            ["codes"] = string.Join(",", codes),
+            ["indicators"] = string.Join(",", indicators.Select(i => i.Value)),
+        };
+        return await Request<TablesResult<Table<RealTimeIndicator>[]>>("api/v1/real_time_quotation", body, null);
     }
 
     private async Task<T> Request<T>(string path, IDictionary<string, object>? body = null, IEnumerable<ValueTuple<string, string>>? headers = null) where T : RestResult, new()
